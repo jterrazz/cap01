@@ -15,21 +15,25 @@ routes; the corpus is `docs/`, and it is not restated here.
 - Nothing runs outside Docker. The Makefile is the entrypoint for build,
   run, test and lint, and CI runs the same targets.
 - The tree still carries the product's two former names. Read
-  `docs/04-state-and-names.md` before assuming an identifier is a typo.
+  `docs/06-state-and-names.md` before assuming an identifier is a typo.
 
 ## Where knowledge lives
 
-| Working on…                             | Read                         |
-| --------------------------------------- | ---------------------------- |
-| Layers, ports, the HTTP surface         | `docs/01-architecture.md`    |
-| The Prisma schema and its migrations    | `docs/02-data.md`            |
-| Make targets, Docker, the tests, the CI | `docs/03-workflow.md`        |
-| What is built, and the former names     | `docs/04-state-and-names.md` |
-| Why a choice was made                   | `docs/decisions/`            |
+The corpus map is `docs/README.md`.
 
-The corpus map is `docs/README.md`. The product knowledge behind the
-repository — the vision, the glossary, what Capitaine is for — is not here:
-it is the brand corpus in `jterrazz-os`, at `home/capitaine/wiki/`.
+| Working on…                             | Read                          |
+| ---------------------------------------- | ------------------------------ |
+| Layers, ports, the HTTP surface         | `docs/01-architecture.md`     |
+| The Makefile, Docker, CI                | `docs/02-developing.md`       |
+| The suites, the fixtures                | `docs/03-testing.md`          |
+| The image, the Compose stack, config    | `docs/04-operating.md`        |
+| The Prisma schema and its migrations    | `docs/05-data.md`             |
+| What is built, and the former names     | `docs/06-state-and-names.md`  |
+| Why a choice was made                   | `docs/decisions/`             |
+
+The product knowledge behind the repository — the vision, the glossary,
+what Capitaine is for — is not here: it is the brand corpus in
+`jterrazz-os`, at `home/capitaine/wiki/`.
 
 ## Commands
 
@@ -46,7 +50,3 @@ make lint-style  # Prettier
 
 - A change to behaviour updates the matching `docs/` chapter in the same
   change. The chapters are the manual; this brief only points at them.
-- A new route ships with an end-to-end spec under `__tests__/e2e/`, a new
-  use-case with a unit test beside it.
-- A schema change ships with its migration, generated through
-  `make db-migrate`.
