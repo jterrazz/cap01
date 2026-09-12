@@ -1,14 +1,14 @@
-# Agent brief — cap01-web
+# Agent brief — cap01
 
-React Router framework mode and Vite own this web workspace. Domain state,
-browser persistence and presentation are separate; no connected service is faked.
+This npm workspace owns product applications. Only `apps/web` exists today;
+keep future API and native boundaries explicit without empty packages.
 
 Start with the [corpus map](docs/README.md).
 
-| Working on                  | Read                                      |
-| --------------------------- | ----------------------------------------- |
-| Boundaries and routes       | [Architecture](docs/01-architecture.md)   |
-| Toolchain and local changes | [Developing](docs/02-developing.md)       |
-| Behavior and validation     | [Testing](docs/03-testing.md)             |
-| Running the preview         | [Operating](docs/04-operating.md)         |
-| Interface reference         | [Visual system](docs/05-visual-system.md) |
+| Working on                     | Read                                    |
+| ------------------------------ | --------------------------------------- |
+| Product boundaries             | [Architecture](docs/01-architecture.md) |
+| Commands and workspace changes | [Developing](docs/02-developing.md)     |
+| Validation                     | [Testing](docs/03-testing.md)           |
+| Runtime and deployment status  | [Operating](docs/04-operating.md)       |
+| Web interface                  | [Web brief](apps/web/AGENTS.md)         |

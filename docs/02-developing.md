@@ -1,6 +1,6 @@
 # Developing
 
-Use Node 24 and npm with the committed lockfile.
+Use Node 24 and npm from the repository root; one root lockfile resolves all workspaces.
 
 ```sh
 npm ci
@@ -9,9 +9,10 @@ make fix
 make check
 ```
 
-Development listens on 4320. The quality gate runs lint, production build and
-tests. `@jterrazz/typescript` owns formatting, lint and unused-code checks;
-React Router generates route types before checks.
+Root scripts currently delegate to `@cap01/web`. `npm run dev` starts port 4320;
+`npm run build`, `npm run start`, `npm run lint` and `npm test` retain their usual
+application meaning. To target the app explicitly, use `npm run <script> --workspace @cap01/web`.
 
-Change visual tokens in `src/app/globals.css`, views in `src/presentation` and
-state transformations in `src/domain`. Keep routes thin and credentials absent.
+Install application dependencies with `npm install <package> --workspace @cap01/web`.
+Do not create nested lockfiles. Each app owns its tool configuration and corpus;
+root documentation owns relationships and workspace commands.
