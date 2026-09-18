@@ -25,7 +25,8 @@
     "devEngines": {
         "packageManager": {
             "name": "npm",
-            "version": "12.x"
+            "version": "11.x",
+            "onFail": "ignore"
         }
     }
 }
