@@ -13,7 +13,8 @@
         "start": "turbo run start",
         "lint": "turbo run lint",
         "lint:fix": "turbo run lint:fix",
-        "test": "turbo run test"
+        "test": "turbo run test",
+        "check": "turbo run lint build test"
     },
     "devDependencies": {
         "turbo": "2.11.1"
