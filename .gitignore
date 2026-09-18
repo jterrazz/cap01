@@ -5,3 +5,6 @@ node_modules/
 !.env.example
 
 .react-router/
+
+# Turborepo writes its task logs beside each app and offers no way to move them.
+apps/web/.turbo/

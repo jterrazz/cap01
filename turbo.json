@@ -1,0 +1,26 @@
+{
+    "$schema": "https://turborepo.dev/schema.json",
+    "cacheDir": ".artifacts/turbo/cache",
+    "tasks": {
+        "build": {
+            "dependsOn": ["^build"],
+            "outputs": [".artifacts/react-router/**"]
+        },
+        "dev": {
+            "cache": false,
+            "persistent": true
+        },
+        "lint": {
+            "outputs": [".react-router/types/**"]
+        },
+        "lint:fix": {
+            "cache": false
+        },
+        "start": {
+            "cache": false
+        },
+        "test": {
+            "dependsOn": ["build"]
+        }
+    }
+}
