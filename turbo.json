@@ -17,7 +17,8 @@
             "cache": false
         },
         "start": {
-            "cache": false
+            "cache": false,
+            "passThroughEnv": ["PORT"]
         },
         "test": {
             "dependsOn": ["build"]
