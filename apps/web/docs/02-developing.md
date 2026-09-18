@@ -1,7 +1,8 @@
 # Developing
 
 Use Node 24 and npm with the monorepo root lockfile. Run root commands from the
-repository root, or target this app with `--workspace @cap01/web`.
+repository root; they reach this app through Turborepo, and `--filter=@cap01/web`
+narrows one to it.
 
 ```sh
 npm ci
