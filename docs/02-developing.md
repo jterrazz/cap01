@@ -9,9 +9,19 @@ make fix
 make check
 ```
 
-Root scripts currently delegate to `@cap01/web`. `npm run dev` starts port 4320;
-`npm run build`, `npm run start`, `npm run lint` and `npm test` retain their usual
-application meaning. To target the app explicitly, use `npm run <script> --workspace @cap01/web`.
+Every root script is a `turbo run`, so `npm run build` builds whichever workspaces
+carry a `build` script and reuses the result when nothing they read has changed.
+`npm run dev` starts port 4320; `npm run build`, `npm run start`, `npm run lint` and
+`npm test` retain their usual application meaning. `make check` is one run of the
+three gate tasks, `turbo run lint build test`.
+
+To target one application, filter it: `npm run build -- --filter=@cap01/web`. To make
+a task run despite a cache hit, add `--force`.
+
+`turbo.json` declares what each task needs and what it writes: `test` waits for
+`build`, because the website specs serve the production bundle, and `lint` claims the
+route types React Router generates. The cache is a directory like any other build
+output, `.artifacts/turbo/cache`; deleting it costs a full run and nothing else.
 
 Install application dependencies with `npm install <package> --workspace @cap01/web`.
 Do not create nested lockfiles. Each app owns its tool configuration and corpus;
