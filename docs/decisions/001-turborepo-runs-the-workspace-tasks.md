@@ -1,6 +1,6 @@
 # ADR-001: Turborepo runs the workspace tasks
 
-**Status:** Proposed
+**Status:** Accepted
 **Date:** 2026-09-18
 
 ## Context
