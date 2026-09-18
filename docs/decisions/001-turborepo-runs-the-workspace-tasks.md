@@ -44,10 +44,11 @@ outputs holding another checkout's absolute paths.
 
 `devEngines.packageManager` declares npm. Turbo needs to know the package manager to
 read the lockfile, and this is the form that replaces the top-level `packageManager`
-field turbo deprecates. The version is the major, `12.x`, taken from `npm --version`
-on the workstation — the lockfile header records no npm version — rather than the
-exact `12.0.2`: CI floats the Node 24 minor, its bundled npm moves with it, and npm
-fails an install on a devEngines mismatch.
+field turbo deprecates. The major is `11.x`, the npm that CI's Node 24 bundles, and
+`onFail` is `ignore`: turbo reads the field for the name and the lockfile format only,
+and nothing pins npm — the lockfile header records no version, the workstation runs
+`12.0.2`, CI `11.19.0` — so npm must not fail an install over it. Turbo accepts one
+major in this field, never a floor.
 
 ## Consequences
 
