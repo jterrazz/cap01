@@ -23,6 +23,10 @@ a task run despite a cache hit, add `--force`.
 route types React Router generates. The cache is a directory like any other build
 output, `.artifacts/turbo/cache`; deleting it costs a full run and nothing else.
 
+A task also runs in a filtered environment — turbo passes it only the variables
+`turbo.json` names. `PORT` reaches `start` because the task declares it; a script that
+starts reading a variable needs the same line, or it silently sees nothing.
+
 Install application dependencies with `npm install <package> --workspace @cap01/web`.
 Do not create nested lockfiles. Each app owns its tool configuration and corpus;
 root documentation owns relationships and workspace commands.

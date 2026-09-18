@@ -69,6 +69,11 @@ fails an install on a devEngines mismatch.
   `apps/web/.turbo/`, anchored — the form the artefact gate accepts from a workspace
   root — so the ignore list grows one line per application. A lint run at the ROOT
   would read that same line as its own and fail the gate; the root has no lint today.
+- A task no longer inherits the shell's environment: turbo filters it to what
+  `turbo.json` names. `PORT` is declared on `start` because the operating chapter
+  documents `PORT=4342 npm run start`, which otherwise served port 3000 without a
+  word. Every future variable costs the same line, and a script that reads an
+  undeclared one sees nothing rather than failing.
 - `turbo run <task> --force` is the escape hatch when a cache hit is wrong. A wrong
   hit is a real failure mode: a task whose inputs are under-declared goes green
   without running.
