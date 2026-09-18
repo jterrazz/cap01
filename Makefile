@@ -11,6 +11,7 @@ test: install
 	npm test
 fix: install
 	npm run lint:fix
-check: lint build test
+check: install
+	npm run check
 dev: install
 	npm run dev
