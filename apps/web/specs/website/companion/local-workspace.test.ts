@@ -34,14 +34,14 @@ test('a checked habit and its daily progress survive a page reload', async () =>
 
 test('a saved journal entry remains readable after reopening the page', async () => {
     // Given - a reader writes a reflection in an isolated browser session.
-    const reflection = 'I made space for a quiet walk and came back with a clearer head.',
-        result = await website.visit('/journal', async (visitor) => {
-            await visitor.fill(field('Journal entry'), reflection);
-            await visitor.click(button('Save entry', { exact: true }));
-            await visitor.see(within(main(), content(reflection, { exact: true })));
-            await visitor.goto('/journal');
-            await visitor.see(within(main(), content(reflection, { exact: true })));
-        });
+    const reflection = 'I made space for a quiet walk and came back with a clearer head.';
+    const result = await website.visit('/journal', async (visitor) => {
+        await visitor.fill(field('Journal entry'), reflection);
+        await visitor.click(button('Save entry', { exact: true }));
+        await visitor.see(within(main(), content(reflection, { exact: true })));
+        await visitor.goto('/journal');
+        await visitor.see(within(main(), content(reflection, { exact: true })));
+    });
     // Then - saving persists the actual writing, not only a transient success message.
     expect(result.content).toContain(reflection);
     await expect(result.errors).toBeEmpty();
@@ -50,13 +50,13 @@ test('a saved journal entry remains readable after reopening the page', async ()
 test('device pairing explains its limitation and can be dismissed with escape', async () => {
     // Given - the prototype has no mobile pairing service and the reader opens its explanation.
     const notice =
-            'Mobile pairing is not available in this preview. Your habits and journal stay in this browser for now.',
-        result = await website.visit('/mobile', async (visitor) => {
-            await visitor.click(button('Connect device', { exact: true }));
-            await visitor.see(heading('A companion, in the making.'));
-            await visitor.see(content(notice, { exact: true }));
-            await visitor.press('Escape');
-        });
+        'Mobile pairing is not available in this preview. Your habits and journal stay in this browser for now.';
+    const result = await website.visit('/mobile', async (visitor) => {
+        await visitor.click(button('Connect device', { exact: true }));
+        await visitor.see(heading('A companion, in the making.'));
+        await visitor.see(content(notice, { exact: true }));
+        await visitor.press('Escape');
+    });
     // Then - the dialog closes without pretending that a device was connected.
     expect(result.content).not.toContain(notice);
     expect(result.content).toContain('Connect device');
