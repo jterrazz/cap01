@@ -66,10 +66,10 @@ major in this field, never a floor.
   step was inert for this repository, which wrote nothing there; it now carries the
   build.
 - One path turbo does not let us move: it writes task logs to `<app>/.turbo/`, and no
-  flag, config key or environment variable relocates them. `.gitignore` names
-  `apps/web/.turbo/`, anchored — the form the artefact gate accepts from a workspace
-  root — so the ignore list grows one line per application. A lint run at the ROOT
-  would read that same line as its own and fail the gate; the root has no lint today.
+  flag, config key or environment variable relocates them. `.gitignore` names `.turbo/`
+  plainly — `@jterrazz/typescript` carries that directory on the artefact gate's closed
+  exception list — so one line covers every application and a lint run at any depth
+  reads it the same way.
 - A task no longer inherits the shell's environment: turbo filters it to what
   `turbo.json` names. `PORT` is declared on `start` because the operating chapter
   documents `PORT=4342 npm run start`, which otherwise served port 3000 without a
