@@ -532,6 +532,7 @@ textarea {
     right: 12px;
 }
 .storage-notice {
+    display: block;
     padding: 12px;
     border: 1px solid var(--line);
     margin: 0 auto 24px;

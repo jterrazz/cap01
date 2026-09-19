@@ -2,13 +2,16 @@ import { ArrowUpRight, Check, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router';
 
-import { localDate, toggleHabit, type Workspace } from '../domain/workspace';
+import { localDate, toggleHabit } from '../domain/workspace';
+import type { Workspace } from '../domain/workspace';
 
 type Props = { workspace: Workspace; update: (next: Workspace) => void; ready: boolean };
 export function HabitsView({ workspace, update, ready }: Props) {
-    const [title, setTitle] = useState(''),
-        today = localDate(new Date()),
-        completed = workspace.habits.filter((habit) => habit.completedDates.includes(today)).length;
+    const [title, setTitle] = useState('');
+    const today = localDate(new Date());
+    const completed = workspace.habits.filter((habit) =>
+        habit.completedDates.includes(today),
+    ).length;
     return (
         <section className="workspace-content">
             <p className="eyebrow">Today</p>
@@ -37,7 +40,9 @@ export function HabitsView({ workspace, update, ready }: Props) {
                 <input
                     id="habit-title"
                     maxLength={120}
-                    onChange={(event) => setTitle(event.target.value)}
+                    onChange={(event) => {
+                        setTitle(event.target.value);
+                    }}
                     placeholder="A small daily habit…"
                     required
                     value={title}
@@ -54,7 +59,9 @@ export function HabitsView({ workspace, update, ready }: Props) {
                     <label className="habit-row" key={habit.id}>
                         <input
                             checked={habit.completedDates.includes(today)}
-                            onChange={() => update(toggleHabit(workspace, habit.id, today))}
+                            onChange={() => {
+                                update(toggleHabit(workspace, habit.id, today));
+                            }}
                             type="checkbox"
                         />
                         <span>{habit.title}</span>
@@ -103,7 +110,9 @@ export function JournalView({ workspace, update, ready }: Props) {
                 <textarea
                     id="journal-entry"
                     maxLength={10_000}
-                    onChange={(event) => setBody(event.target.value)}
+                    onChange={(event) => {
+                        setBody(event.target.value);
+                    }}
                     placeholder="Start anywhere…"
                     required
                     rows={5}
@@ -129,8 +138,8 @@ export function JournalView({ workspace, update, ready }: Props) {
     );
 }
 export function GoalsView({ workspace, update, ready }: Props) {
-    const [goal, setGoal] = useState<null | string>(null),
-        [saved, setSaved] = useState(false);
+    const [goal, setGoal] = useState<null | string>(null);
+    const [saved, setSaved] = useState(false);
     return (
         <section className="workspace-content">
             <p className="eyebrow">Goals</p>
@@ -159,9 +168,9 @@ export function GoalsView({ workspace, update, ready }: Props) {
                     Save intention
                 </button>
                 {saved && (
-                    <p className="save-message" role="status">
+                    <output className="save-message">
                         <Check size={14} /> Intention saved
-                    </p>
+                    </output>
                 )}
             </form>
         </section>

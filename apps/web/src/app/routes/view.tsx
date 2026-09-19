@@ -15,7 +15,8 @@ const views = new Set([
     'work',
 ]);
 export function loader({ params }: { params: { view?: string } }) {
-    if (!params.view || !views.has(params.view)) {
+    if (params.view === undefined || !views.has(params.view)) {
+        // oxlint-disable-next-line typescript/only-throw-error -- a React Router loader answers a missing route by throwing the Response it must serve
         throw new Response('Not found', { status: 404 });
     }
     return null;
