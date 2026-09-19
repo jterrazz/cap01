@@ -32,37 +32,37 @@ import { useWorkspace } from './use-workspace';
 import { GoalsView, HabitsView, JournalView, OverviewView } from './workspace-views';
 
 const navigation = [
-        { href: '/overview', label: 'Overview', icon: Compass },
-        { href: '/today', label: 'Habits', icon: Circle },
-        { href: '/goals', label: 'Goals', icon: Target },
-        { href: '/journal', label: 'Journal', icon: NotebookPen },
-        { href: '/mobile', label: 'Mobile', icon: Smartphone },
-    ],
-    areas = [
-        { href: '/mind', label: 'Mind & focus' },
-        { href: '/health', label: 'Health & energy' },
-        { href: '/work', label: 'Work & craft' },
-    ],
-    tabs = [
-        { href: '/coach', label: 'Coach', icon: Sparkles },
-        { href: '/today', label: 'Today', icon: Compass },
-        { href: '/journal', label: 'Journal', icon: BookOpen },
-        { href: '/insights', label: 'Insights', icon: ChartNoAxesCombined },
-    ];
+    { href: '/overview', label: 'Overview', icon: Compass },
+    { href: '/today', label: 'Habits', icon: Circle },
+    { href: '/goals', label: 'Goals', icon: Target },
+    { href: '/journal', label: 'Journal', icon: NotebookPen },
+    { href: '/mobile', label: 'Mobile', icon: Smartphone },
+];
+const areas = [
+    { href: '/mind', label: 'Mind & focus' },
+    { href: '/health', label: 'Health & energy' },
+    { href: '/work', label: 'Work & craft' },
+];
+const tabs = [
+    { href: '/coach', label: 'Coach', icon: Sparkles },
+    { href: '/today', label: 'Today', icon: Compass },
+    { href: '/journal', label: 'Journal', icon: BookOpen },
+    { href: '/insights', label: 'Insights', icon: ChartNoAxesCombined },
+];
 
 export function CapApp({ view }: { view: string }) {
-    const dialogTrigger = useRef<HTMLElement | null>(null),
-        { workspace, update, ready, notice } = useWorkspace(),
-        [dialog, setDialog] = useState<'check-in' | 'device' | null>(null),
-        [checkIn, setCheckIn] = useState(''),
-        [query, setQuery] = useState(''),
-        [menuOpen, setMenuOpen] = useState(false),
-        isMobile = view === 'mobile',
-        selectedArea = areas.find((area) => area.href === `/${view}`),
-        search = query.trim().toLowerCase(),
-        searchResults = [...navigation, ...areas].filter((item) =>
-            item.label.toLowerCase().includes(search),
-        );
+    const dialogTrigger = useRef<HTMLElement | null>(null);
+    const { workspace, update, ready, notice } = useWorkspace();
+    const [dialog, setDialog] = useState<'check-in' | 'device' | null>(null);
+    const [checkIn, setCheckIn] = useState('');
+    const [query, setQuery] = useState('');
+    const [menuOpen, setMenuOpen] = useState(false);
+    const isMobile = view === 'mobile';
+    const selectedArea = areas.find((area) => area.href === `/${view}`);
+    const search = query.trim().toLowerCase();
+    const searchResults = [...navigation, ...areas].filter((item) =>
+        item.label.toLowerCase().includes(search),
+    );
     useEffect(() => {
         function dismiss(event: KeyboardEvent) {
             if (event.key === 'Escape') {
@@ -70,8 +70,10 @@ export function CapApp({ view }: { view: string }) {
                 setQuery('');
             }
         }
-        window.addEventListener('keydown', dismiss);
-        return () => window.removeEventListener('keydown', dismiss);
+        globalThis.addEventListener('keydown', dismiss);
+        return () => {
+            globalThis.removeEventListener('keydown', dismiss);
+        };
     }, []);
     function openDialog(kind: 'check-in' | 'device') {
         dialogTrigger.current =
@@ -89,7 +91,9 @@ export function CapApp({ view }: { view: string }) {
                     aria-expanded={menuOpen}
                     aria-label="Toggle navigation"
                     className="menu-toggle icon-button"
-                    onClick={() => setMenuOpen(!menuOpen)}
+                    onClick={() => {
+                        setMenuOpen(!menuOpen);
+                    }}
                     type="button"
                 >
                     <Menu size={18} />
@@ -115,7 +119,9 @@ export function CapApp({ view }: { view: string }) {
                     <Search aria-hidden="true" size={14} />
                     <input
                         aria-label="Search workspace"
-                        onChange={(event) => setQuery(event.target.value)}
+                        onChange={(event) => {
+                            setQuery(event.target.value);
+                        }}
                         placeholder="Search"
                         value={query}
                     />
@@ -213,13 +219,13 @@ export function CapApp({ view }: { view: string }) {
                 </div>
             </aside>
             <main className="main-content" id="main" tabIndex={-1}>
-                {notice && (
-                    <p className="storage-notice" role="status">
-                        {notice}
-                    </p>
-                )}
+                {notice && <output className="storage-notice">{notice}</output>}
                 {isMobile ? (
-                    <MobileView onConnect={() => openDialog('device')} />
+                    <MobileView
+                        onConnect={() => {
+                            openDialog('device');
+                        }}
+                    />
                 ) : view === 'today' ? (
                     <HabitsView ready={ready} update={update} workspace={workspace} />
                 ) : view === 'journal' ? (
@@ -252,7 +258,9 @@ export function CapApp({ view }: { view: string }) {
                     </section>
                 ) : (
                     <OverviewView
-                        onCheckIn={() => openDialog('check-in')}
+                        onCheckIn={() => {
+                            openDialog('check-in');
+                        }}
                         view={view}
                         workspace={workspace}
                     />
@@ -273,7 +281,11 @@ export function CapApp({ view }: { view: string }) {
                         onCloseAutoFocus={(event) => {
                             event.preventDefault();
                             const trigger = dialogTrigger.current;
-                            if (trigger?.isConnected && trigger.getClientRects().length) {
+                            if (
+                                trigger !== null &&
+                                trigger.isConnected &&
+                                trigger.getClientRects().length > 0
+                            ) {
                                 trigger.focus();
                             } else {
                                 document.querySelector<HTMLElement>('.menu-toggle')?.focus();
@@ -331,7 +343,9 @@ export function CapApp({ view }: { view: string }) {
                                     <textarea
                                         id="check-in"
                                         maxLength={10_000}
-                                        onChange={(event) => setCheckIn(event.target.value)}
+                                        onChange={(event) => {
+                                            setCheckIn(event.target.value);
+                                        }}
                                         placeholder="Right now, I’m feeling…"
                                         required
                                         rows={4}
