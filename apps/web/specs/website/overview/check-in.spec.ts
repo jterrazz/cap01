@@ -1,22 +1,30 @@
-import { button, field, main, within } from '@jterrazz/test';
+import { button, complementary, content, field, link, main, within } from '@jterrazz/test';
 import { describe, expect, test } from 'vitest';
 
 import { website } from '../website.specification';
 
 describe('check-in', () => {
     test('a check-in written from the overview lands in the journal as its newest entry', async () => {
-        // Given - a reader on the overview of a fresh browser
+        // Given - a reader whose journal already holds one entry
+        const checkIn = 'Rested, a little slow to start.';
         const result = await website
             .clock('2026-09-12T12:00:00Z')
-            .visit('/overview', async (visitor) => {
-                // When - they open a check-in, write a few words and save them
+            .visit('/journal', async (visitor) => {
+                await visitor.fill(field('Journal entry'), 'An older thought.');
+                await visitor.click(button('Save entry'));
+                await visitor.see(within(main(), content('An older thought.')));
+
+                // When - they write a check-in from the overview, then follow it from the recents
+                await visitor.goto('/overview');
                 await visitor.click(within(main(), button('New check-in')));
-                await visitor.fill(field('Your check-in'), 'Rested, a little slow to start.');
+                await visitor.fill(field('Your check-in'), checkIn);
                 await visitor.click(button('Save check-in'));
                 await visitor.gone(field('Your check-in'));
+                await visitor.click(within(complementary(), link(checkIn)));
+                await visitor.see(within(main(), content(checkIn)));
             });
 
-        // Then - the dialog is gone, the overview counts one thought kept, and the entry leads the recents
+        // Then - the journal opens with the check-in first, above the older entry, and the recents lead with it
         expect(result.tree).toMatch(`
             - link "Skip to content":
               - /url: "#main"
@@ -59,23 +67,23 @@ describe('check-in', () => {
               - navigation "Recent entries":
                 - link "Rested, a little slow to start.":
                   - /url: /journal#{{uuid}}
+                - link "An older thought.":
+                  - /url: /journal#{{uuid}}
               - text: c Personal space Local preview
             - main:
-              - paragraph: Overview
-              - heading "A little more intentional." [level=1]
-              - paragraph: A quiet place to reflect, build habits and find your next step.
-              - button "New check-in"
-              - link "Habits you are building 0":
-                - /url: /today
-                - text: Habits you are building
-                - strong: "0"
-              - link "Thoughts you have kept 1":
-                - /url: /journal
-                - text: Thoughts you have kept
-                - strong: "1"
-              - link "Find your next direction":
-                - /url: /goals
-              - paragraph: This preview keeps your notes in this browser. AI coaching is not connected yet.`);
+              - paragraph: Journal
+              - heading "A little room to think." [level=1]
+              - paragraph: What is on your mind today?
+              - text: Journal entry
+              - textbox "Journal entry":
+                - /placeholder: Start anywhere…
+              - button "Save entry"
+              - article:
+                - time: Sep 12, 2026
+                - paragraph: Rested, a little slow to start.
+              - article:
+                - time: Sep 12, 2026
+                - paragraph: An older thought.`);
         expect(result.errors.text).toBe('');
     });
 });
