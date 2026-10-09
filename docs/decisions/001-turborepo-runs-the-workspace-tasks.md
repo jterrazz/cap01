@@ -2,6 +2,7 @@
 
 **Status:** Accepted
 **Date:** 2026-09-18
+**Amended by:** [ADR-002](002-the-toolchain-judges-the-workspace-from-its-root.md), proposed — `lint` and `lint:fix` leave the task graph, and the cache moves to `.artifacts/turbo/`
 
 ## Context
 

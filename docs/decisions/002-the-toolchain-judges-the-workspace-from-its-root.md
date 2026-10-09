@@ -2,6 +2,7 @@
 
 **Status:** Proposed
 **Date:** 2026-10-09
+**Amends:** [ADR-001](001-turborepo-runs-the-workspace-tasks.md) — `lint` and `lint:fix` leave the task graph, and the cache moves to `.artifacts/turbo/`
 
 ## Context
 
