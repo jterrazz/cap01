@@ -87,6 +87,11 @@ describe('workspace', () => {
             error: new TypeError('Invalid workspace'),
         },
         {
+            label: 'a broken habit after a valid one',
+            stored: { habits: [walk, null], entries: [], goal: '' },
+            error: new Error('Invalid habits'),
+        },
+        {
             label: 'a habit that is null',
             stored: { habits: [null], entries: [], goal: '' },
             error: new Error('Invalid habits'),
@@ -134,6 +139,11 @@ describe('workspace', () => {
                 goal: '',
             },
             error: new Error('Invalid habits'),
+        },
+        {
+            label: 'a broken entry after a valid one',
+            stored: { habits: [], entries: [entry, null], goal: '' },
+            error: new Error('Invalid journal'),
         },
         {
             label: 'an entry that is null',
