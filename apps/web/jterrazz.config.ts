@@ -6,6 +6,12 @@ export default defineConfig({
     platform: 'react',
     presets: [test()],
     typescript: {
+        mutation: {
+            ignore: {
+                'src/presentation/**':
+                    'the workspace hydrates: what the server renders here is replaced or kept by the client bundle, which runs no mutant, and the specs read the hydrated page, so a server-side mutant is seen by no run (51 survived, 139 ran only in the browser); the website specs prove these views, unmeasured',
+            },
+        },
         tsconfig: {
             compilerOptions: {
                 rootDirs: ['.', './.react-router/types'],
