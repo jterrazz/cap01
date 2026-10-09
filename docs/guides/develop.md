@@ -30,10 +30,11 @@ needs the same line.
 
 `jterrazz.config.ts` at the root says `workspace`; `apps/web/jterrazz.config.ts`
 says `website` on `react` and holds the app's exceptions, each with its reason —
-the React Router route types its `tsconfig.json` reads, and the views mutation
-leaves out ([Test](test.md#mutation)). `tsconfig.json`, `vitest.config.ts`,
-`oxlint.config.ts` and `oxfmt.config.ts` are derived from them: `make fix`
-writes them, and a hand edit is refused.
+the React Router route types its `tsconfig.json` reads, and the browser-only
+modules mutation leaves out ([Test](test.md#mutation)). The files derived from
+the two are written by `make fix`, and a hand edit is refused: the root keeps
+`oxlint.config.ts` and `oxfmt.config.ts`, one line each, read for the whole
+workspace, and `apps/web` keeps its `tsconfig.json` and `vitest.config.ts`.
 
 Install a dependency of the app with
 `npm install <package> --workspace @cap01/web`; no member keeps a lockfile.
