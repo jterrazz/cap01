@@ -1,7 +1,7 @@
 # Visual system
 
-The supplied Alpaca screenshot is the reference, excluding its browser chrome
-and product identity.
+The type, colors and geometry below are the reference the interface is held
+to: a change to how the app looks either keeps to them or changes them here.
 
 ## Type and color
 
