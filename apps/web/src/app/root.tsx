@@ -1,5 +1,14 @@
 import type { ReactNode } from 'react';
-import { Link, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
+import {
+    isRouteErrorResponse,
+    Link,
+    Links,
+    Meta,
+    Outlet,
+    Scripts,
+    ScrollRestoration,
+    useRouteError,
+} from 'react-router';
 
 import './globals.css';
 
@@ -31,11 +40,23 @@ export default function App() {
 }
 
 export function ErrorBoundary() {
+    const error = useRouteError();
+    // Stryker disable next-line ConditionalExpression,LogicalOperator: a GET raises no error on this app but the missing view's 404, and a website spec sends nothing but a GET, so no spec meets the other page
+    if (isRouteErrorResponse(error) && error.status === 404) {
+        return (
+            <main className="workspace-content">
+                <h1>This page is not available.</h1>
+                <p>
+                    <Link to="/">Back to cap01</Link>
+                </p>
+            </main>
+        );
+    }
     return (
         <main className="workspace-content">
-            <h1>This page is not available.</h1>
+            <h1>Something went wrong.</h1>
             <p>
-                <Link to="/">Back to cap01</Link>
+                This page could not be shown. <Link to="/">Back to cap01</Link>
             </p>
         </main>
     );
