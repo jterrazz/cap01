@@ -203,6 +203,14 @@ describe('workspace', () => {
         },
     );
 
+    test('refuses stored text that is not JSON', () => {
+        // Given - storage holding a document cut short, the likeliest real corruption
+        const stored = '{"habits": [';
+
+        // Then - the read fails on the text itself, before any shape is judged
+        expect(() => parseWorkspace(stored)).toThrow(SyntaxError);
+    });
+
     test.each([
         {
             label: 'a single-digit month and day',
