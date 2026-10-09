@@ -5,6 +5,7 @@ import type { Workspace } from '../domain/workspace';
 import { areaLinks, workspaceLinks } from './shell-links';
 
 function RecentEntries({ workspace }: { workspace: Workspace }) {
+    // Stryker disable next-line ConditionalExpression: the server renders the empty workspace, since storage is read in the browser, so the emptiness test always holds there
     if (workspace.entries.length === 0) {
         return <p className="sidebar-empty">Your next chapter starts here.</p>;
     }
@@ -31,6 +32,7 @@ type SidebarProps = { onCheckIn: () => void; open: boolean; view: string; worksp
 
 export function Sidebar({ onCheckIn, open, view, workspace }: SidebarProps) {
     return (
+        // Stryker disable next-line StringLiteral: a class name hydration keeps as the server wrote it, where the menu is always closed, and the outline draws no class
         <aside className={`sidebar ${open ? 'sidebar-open' : ''}`} id="workspace-sidebar">
             <nav aria-label="Workspace">
                 <button className="sidebar-link" onClick={onCheckIn} type="button">
@@ -39,6 +41,7 @@ export function Sidebar({ onCheckIn, open, view, workspace }: SidebarProps) {
                 </button>
                 {workspaceLinks.map(({ href, label, icon: Icon }) => (
                     <Link
+                        // Stryker disable next-line ConditionalExpression,EqualityOperator,StringLiteral: hydration keeps the attributes the server wrote without comparing them, and the outline draws no aria-current
                         aria-current={href === `/${view}` ? 'page' : undefined}
                         className="sidebar-link"
                         key={href}
@@ -54,6 +57,7 @@ export function Sidebar({ onCheckIn, open, view, workspace }: SidebarProps) {
                 <nav aria-label="Your areas">
                     {areaLinks.map(({ href, label }) => (
                         <Link
+                            // Stryker disable next-line ConditionalExpression,EqualityOperator,StringLiteral: hydration keeps the attributes the server wrote without comparing them, and the outline draws no aria-current
                             aria-current={href === `/${view}` ? 'page' : undefined}
                             className="sidebar-link"
                             key={href}

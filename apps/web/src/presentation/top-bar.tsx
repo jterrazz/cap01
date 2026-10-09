@@ -39,11 +39,14 @@ type TopBarProps = {
 
 export function TopBar({ menuOpen, onToggleMenu, view, workspace }: TopBarProps) {
     const [query, setQuery] = useState('');
+    // Stryker disable ArrayDeclaration: the callback's dependencies, which only the effect it is handed to reads, and the server runs no effect
     useEscape(
         useCallback(() => {
             setQuery('');
         }, []),
     );
+    // Stryker restore ArrayDeclaration
+    // Stryker disable next-line MethodExpression: the server renders an empty query, which neither trimming nor case changes
     const search = query.trim().toLowerCase();
     return (
         <header className="topbar">
@@ -65,6 +68,7 @@ export function TopBar({ menuOpen, onToggleMenu, view, workspace }: TopBarProps)
             <nav aria-label="Main" className="top-tabs">
                 {mainTabs.map(({ href, label, icon: Icon }) => (
                     <Link
+                        // Stryker disable next-line ConditionalExpression,EqualityOperator,StringLiteral: hydration keeps the attributes the server wrote without comparing them, and the outline draws no aria-current
                         aria-current={href === `/${view}` ? 'page' : undefined}
                         key={href}
                         to={href}
@@ -84,7 +88,10 @@ export function TopBar({ menuOpen, onToggleMenu, view, workspace }: TopBarProps)
                     placeholder="Search"
                     value={query}
                 />
-                {search && <SearchResults search={search} workspace={workspace} />}
+                {
+                    // Stryker disable next-line ConditionalExpression: the server renders an empty query, so the results are the browser's to show, and hydration replaces whatever the server listed before a spec reads the page
+                    search && <SearchResults search={search} workspace={workspace} />
+                }
             </div>
         </header>
     );

@@ -8,8 +8,10 @@ export default defineConfig({
     typescript: {
         mutation: {
             ignore: {
-                'src/presentation/**':
-                    'the workspace hydrates: what the server renders here is replaced or kept by the client bundle, which runs no mutant, and the specs read the hydrated page, so a server-side mutant is seen by no run (51 survived, 139 ran only in the browser); the website specs prove these views, unmeasured',
+                'src/presentation/use-escape.ts':
+                    'the keydown listener is attached in an effect, which only the browser runs, and the client bundle carries no active mutant',
+                'src/presentation/workspace-dialog.tsx':
+                    'the dialog renders through a portal only the browser mounts, and its handlers run there, so the server renders none of it and the client bundle carries no active mutant',
             },
         },
         tsconfig: {

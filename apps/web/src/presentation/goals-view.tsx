@@ -28,16 +28,25 @@ export function GoalsView({ workspace, update, ready }: WorkspaceProps) {
                         setSaved(false);
                     }}
                     rows={3}
+                    // Stryker disable next-line LogicalOperator: a controlled field takes its value from the client as it hydrates, whatever the server wrote
                     value={goal ?? workspace.goal}
                 />
-                <button className="primary-button" disabled={!ready} type="submit">
+                <button
+                    className="primary-button"
+                    // Stryker disable next-line BooleanLiteral: the server renders the control before storage is read, and the browser's first effect sets it anew, so no spec reads the value the server wrote
+                    disabled={!ready}
+                    type="submit"
+                >
                     Save intention
                 </button>
-                {saved && (
-                    <output className="save-message">
-                        <Check size={14} /> Intention saved
-                    </output>
-                )}
+                {
+                    // Stryker disable next-line ConditionalExpression: the server renders before any save, so the confirmation is the browser's to show, and hydration replaces whatever the server rendered there before a spec reads the page
+                    saved && (
+                        <output className="save-message">
+                            <Check size={14} /> Intention saved
+                        </output>
+                    )
+                }
             </form>
         </section>
     );

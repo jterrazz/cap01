@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
 
 import { AreaView } from './area-view';
 import { GoalsView } from './goals-view';
@@ -51,16 +52,41 @@ function CurrentView({ onOpen, ready, update, view, workspace }: ViewProps) {
     );
 }
 
-export function CapApp({ view }: { view: string }) {
-    const trigger = useRef<HTMLElement | null>(null);
-    const { workspace, update, ready, notice } = useWorkspace();
-    const [dialog, setDialog] = useState<DialogKind | null>(null);
+function MainContent({ children, notice }: { children: ReactNode; notice: string }) {
+    return (
+        <main
+            className="main-content"
+            id="main"
+            // Stryker disable next-line UnaryOperator: hydration keeps the attributes the server wrote without comparing them, and the outline draws no tabindex
+            tabIndex={-1}
+        >
+            {
+                // Stryker disable next-line ConditionalExpression: the server renders before storage is read, so it has no notice to show, and an empty output draws nothing in the outline
+                notice && <output className="storage-notice">{notice}</output>
+            }
+            {children}
+        </main>
+    );
+}
+
+function useMenu() {
+    // Stryker disable next-line BooleanLiteral: the menu's state reaches only attributes hydration keeps as the server wrote them — the sidebar's class, and aria-expanded on a toggle hidden at the specs' desktop width
     const [menuOpen, setMenuOpen] = useState(false);
+    // Stryker disable ArrayDeclaration: the callback's dependencies, which only the effect it is handed to reads, and the server runs no effect
     useEscape(
         useCallback(() => {
             setMenuOpen(false);
         }, []),
     );
+    // Stryker restore ArrayDeclaration
+    return [menuOpen, setMenuOpen] as const;
+}
+
+export function CapApp({ view }: { view: string }) {
+    const trigger = useRef<HTMLElement | null>(null);
+    const { workspace, update, ready, notice } = useWorkspace();
+    const [dialog, setDialog] = useState<DialogKind | null>(null);
+    const [menuOpen, setMenuOpen] = useMenu();
     function open(kind: DialogKind) {
         trigger.current =
             document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -88,8 +114,7 @@ export function CapApp({ view }: { view: string }) {
                 view={view}
                 workspace={workspace}
             />
-            <main className="main-content" id="main" tabIndex={-1}>
-                {notice && <output className="storage-notice">{notice}</output>}
+            <MainContent notice={notice}>
                 <CurrentView
                     onOpen={open}
                     ready={ready}
@@ -97,7 +122,7 @@ export function CapApp({ view }: { view: string }) {
                     view={view}
                     workspace={workspace}
                 />
-            </main>
+            </MainContent>
             <WorkspaceDialog
                 dialog={dialog}
                 onClose={() => {

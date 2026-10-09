@@ -40,9 +40,21 @@ coaching exists.
 ## Mutation
 
 `make check` ends on `typescript mutation`, the zero-survivor verdict over the
-change. The domain is measured by its module tests. The views under
-`src/presentation/` are declared out of it in `apps/web/jterrazz.config.ts`: the
-page hydrates, so what the server renders under a mutant is replaced or kept by a
-client bundle that runs none, and every mutant there was either invisible to the
-specs or ran only in the browser, which no mutation run starts. The website specs
-prove those views; mutation does not measure them.
+change. The domain is measured by its module tests, the views by the website
+specs: the server renders a view under the mutant, the browser hydrates it with
+the client bundle, which carries none, and the specs read the hydrated page.
+What the server renders as text or structure is seen there, and a mutant of a
+view's routing, its copy or its links is killed like any other.
+
+Four things the server renders are not seen, and each is declared where it
+stands with a `// Stryker disable next-line` and its reason: an attribute
+hydration keeps without comparing it (`aria-current`, a class name, `disabled`
+while storage is read), a controlled field's value, which the client sets as it
+hydrates, a branch over the workspace or a query, which are always empty on the
+server since storage is read in the browser, and a callback's dependencies,
+which only an effect reads, and the server runs none. A handler runs only in the
+browser, where no mutant is active: the run counts its mutants, unjudged. Two
+modules hold nothing else — the keydown listener (`use-escape.ts`) and the
+dialog, which renders through a portal only the browser mounts
+(`workspace-dialog.tsx`) — and `apps/web/jterrazz.config.ts` leaves them out by
+file.
