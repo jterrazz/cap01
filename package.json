@@ -11,16 +11,17 @@
         "dev": "turbo run dev",
         "build": "turbo run build",
         "start": "turbo run start",
-        "lint": "turbo run lint",
-        "lint:fix": "turbo run lint:fix",
-        "test": "turbo run test",
-        "check": "turbo run lint build test"
+        "typegen": "turbo run typegen",
+        "lint": "turbo run typegen && typescript check",
+        "lint:fix": "turbo run typegen && typescript fix",
+        "test": "turbo run test"
     },
     "devDependencies": {
-        "turbo": "2.11.1"
-    },
-    "engines": {
-        "node": ">=24 <25"
+        "@jterrazz/test": "file:../../../../jterrazz/work/repositories/package-test",
+        "@jterrazz/typescript": "file:../../../../jterrazz/work/repositories/package-typescript",
+        "playwright": "1.63.0",
+        "turbo": "2.11.1",
+        "vitest": "5.0.1"
     },
     "devEngines": {
         "packageManager": {
@@ -28,5 +29,8 @@
             "version": "11.x",
             "onFail": "ignore"
         }
+    },
+    "engines": {
+        "node": ">=24 <25"
     }
 }
