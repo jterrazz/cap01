@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
+import { Link, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 
 import './globals.css';
 
@@ -28,4 +28,15 @@ export function Layout({ children }: { children: ReactNode }) {
 }
 export default function App() {
     return <Outlet />;
+}
+
+export function ErrorBoundary() {
+    return (
+        <main className="workspace-content">
+            <h1>This page is not available.</h1>
+            <p>
+                <Link to="/">Back to cap01</Link>
+            </p>
+        </main>
+    );
 }
