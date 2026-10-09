@@ -11,5 +11,5 @@ npm ci
 npm run dev
 ```
 
-Open http://localhost:4320. The preview stores data only in this browser.
-Read the [product corpus](docs/README.md) and [web guide](apps/web/docs/README.md).
+Open <http://localhost:4320>. The preview stores data only in this browser.
+The manual is [docs/](docs/README.md).
