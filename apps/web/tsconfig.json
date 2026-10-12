@@ -1,8 +1,28 @@
 {
     "extends": "@jterrazz/typescript/tsconfig/react",
     "compilerOptions": {
-        "rootDirs": [".", "./.react-router/types"],
+        "rootDirs": [
+            "${configDir}",
+            "${configDir}/.react-router/types",
+            ".",
+            "./.react-router/types"
+        ],
         "types": ["node", "vite/client"]
     },
-    "include": ["${configDir}/**/*.ts", "${configDir}/**/*.tsx", ".react-router/types/**/*"]
+    "include": [
+        "${configDir}/**/*.ts",
+        "${configDir}/**/*.tsx",
+        "${configDir}/.react-router/types/**/*",
+        ".react-router/types/**/*"
+    ],
+    "exclude": [
+        "${configDir}/node_modules",
+        "${configDir}/dist",
+        "${configDir}/.artifacts",
+        "${configDir}/**/__expected__",
+        "${configDir}/**/__fixtures__",
+        "${configDir}/**/__requests__",
+        "${configDir}/**/__seeds__",
+        "${configDir}/public"
+    ]
 }
