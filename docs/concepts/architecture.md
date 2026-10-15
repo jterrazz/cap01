@@ -6,11 +6,11 @@ member from the root.
 
 ## The workspace
 
-The root declares itself a `workspace` and owns no product code. `apps/web` is the
-only member: a `website` on the `react` platform. A product API and an Expo
-native client are planned boundaries; none is scaffolded, and a member joins the
-workspace only when it has real code and a contract to own. The client calls no
-backend.
+The root lists its members in `package.json`'s `workspaces`, declares no kind
+and owns no product code. `apps/web` is the only member: a `website` on the
+`react` platform. A product API and an Expo native client are planned
+boundaries; none is scaffolded, and a member joins the workspace only when it
+has real code and a contract to own. The client calls no backend.
 
 The public Astro landing is a separate repository, `jterrazz/cap01-website`, and
 is not part of this build or of the workspace's state.

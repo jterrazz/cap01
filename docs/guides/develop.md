@@ -28,11 +28,12 @@ needs the same line.
 
 ## The declaration
 
-`jterrazz.config.ts` at the root says `workspace`; `apps/web/jterrazz.config.ts`
-says `website` on `react` and holds the app's exceptions, each with its reason —
+The root lists its members in `package.json`'s `workspaces` and declares no
+kind, so it keeps no `jterrazz.config.ts`; `apps/web/jterrazz.config.ts` says
+`website` on `react` and holds the app's exceptions, each with its reason —
 the React Router route types its `tsconfig.json` reads, and the browser-only
 modules mutation leaves out ([Test](test.md#mutation)). The files derived from
-the two are written by `make fix`, and a hand edit is refused: the root keeps
+it are written by `make fix`, and a hand edit is refused: the root keeps
 `oxlint.config.ts` and `oxfmt.config.ts`, one line each, read for the whole
 workspace, and `apps/web` keeps its `tsconfig.json` and `vitest.config.ts`.
 
