@@ -70,7 +70,7 @@ function MainContent({ children, notice }: { children: ReactNode; notice: string
 }
 
 function useMenu() {
-    // Stryker disable next-line BooleanLiteral: the menu's state reaches only attributes hydration keeps as the server wrote them — the sidebar's class, and aria-expanded on a toggle hidden at the specs' desktop width
+    // Stryker disable next-line BooleanLiteral: the menu's state reaches only attributes hydration keeps as the server wrote them (the sidebar's class, and aria-expanded on a toggle hidden at the specs' desktop width)
     const [menuOpen, setMenuOpen] = useState(false);
     // Stryker disable ArrayDeclaration: the callback's dependencies, which only the effect it is handed to reads, and the server runs no effect
     useEscape(
