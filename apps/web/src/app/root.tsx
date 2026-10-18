@@ -19,7 +19,7 @@ export function Layout({ children }: { children: ReactNode }) {
                 <meta charSet="utf-8" />
                 <meta content="width=device-width, initial-scale=1" name="viewport" />
                 <meta content="noindex,nofollow" name="robots" />
-                <title>cap01 — A little more intentional</title>
+                <title>cap01: A little more intentional</title>
                 <meta
                     content="A quiet place to reflect, build habits and find your next step."
                     name="description"

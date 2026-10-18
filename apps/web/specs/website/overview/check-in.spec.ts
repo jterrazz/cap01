@@ -76,7 +76,7 @@ describe('check-in', () => {
               - paragraph: What is on your mind today?
               - text: Journal entry
               - textbox "Journal entry":
-                - /placeholder: Start anywhere…
+                - /placeholder: Start anywhere...
               - button "Save entry"
               - article:
                 - time: Sep 12, 2026

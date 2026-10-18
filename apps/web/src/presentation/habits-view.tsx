@@ -29,7 +29,7 @@ function HabitForm({ ready, update, workspace }: WorkspaceProps) {
                 onChange={(event) => {
                     setTitle(event.target.value);
                 }}
-                placeholder="A small daily habit…"
+                placeholder="A small daily habit..."
                 required
                 value={title}
             />

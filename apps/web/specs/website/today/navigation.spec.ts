@@ -64,7 +64,7 @@ describe('navigation', () => {
               - paragraph: What is on your mind today?
               - text: Journal entry
               - textbox "Journal entry":
-                - /placeholder: Start anywhere…
+                - /placeholder: Start anywhere...
               - button "Save entry"`);
         expect(result.errors.text).toBe('');
     });

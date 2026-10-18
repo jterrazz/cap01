@@ -66,7 +66,7 @@ describe('habits', () => {
               - paragraph: Choose something worth showing up for.
               - text: New habit
               - textbox "New habit":
-                - /placeholder: A small daily habit…
+                - /placeholder: A small daily habit...
               - button "Add habit"
               - paragraph: 1 of 1 completed today
               - checkbox "Read ten pages" [checked]

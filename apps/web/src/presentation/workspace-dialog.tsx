@@ -61,7 +61,7 @@ function CheckIn({ draft, onDraft, onSave, ready }: CheckInProps) {
                     onChange={(event) => {
                         onDraft(event.target.value);
                     }}
-                    placeholder="Right now, I’m feeling…"
+                    placeholder="Right now, I'm feeling..."
                     required
                     rows={4}
                     value={draft}

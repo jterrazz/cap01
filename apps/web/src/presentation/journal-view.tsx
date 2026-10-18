@@ -57,7 +57,7 @@ export function JournalView({ ready, update, workspace }: WorkspaceProps) {
                     onChange={(event) => {
                         setBody(event.target.value);
                     }}
-                    placeholder="Start anywhere…"
+                    placeholder="Start anywhere..."
                     required
                     rows={5}
                     value={body}
