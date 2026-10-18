@@ -23,7 +23,7 @@ navigation; Vite bundles it. Its code has three layers:
 | Folder              | Holds                                                                       |
 | ------------------- | --------------------------------------------------------------------------- |
 | `src/app/`          | the document, the route table and the thin route modules React Router reads |
-| `src/presentation/` | the shell — top bar, sidebar, dialog — the views, and the hooks they use    |
+| `src/presentation/` | the shell (top bar, sidebar, dialog), the views, and the hooks they use     |
 | `src/domain/`       | habits, journal entries and the intention, with no React and no storage     |
 
 The root path opens Mobile. Named routes serve Today, Journal, Goals, Overview,
@@ -33,8 +33,8 @@ pages lead into the one shared workspace and do not filter saved data.
 
 ## State
 
-The workspace — habits with their dated completions, journal entries, one
-intention — is one validated, versioned document in `localStorage`. The domain
+The workspace (habits with their dated completions, journal entries, one
+intention) is one validated, versioned document in `localStorage`. The domain
 parser refuses a malformed document rather than reading part of it; when it
 cannot be read or written, the app says so and keeps changes for the session.
 A completion belongs to the reader's local calendar day, not a UTC one.

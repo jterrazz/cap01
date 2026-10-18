@@ -10,7 +10,7 @@ Node 24 and npm, from the repository root: one lockfile resolves every member.
 | `make lint`  | the route types, then `typescript check` over the whole workspace |
 | `make fix`   | the route types, then `typescript fix`                            |
 | `make test`  | every member's vitest suite, after its build (`turbo run test`)   |
-| `make check` | `lint`, `test`, then the mutation verdict — everything CI runs    |
+| `make check` | `lint`, `test`, then the mutation verdict: everything CI runs     |
 | `make dev`   | the development server on port 4320                               |
 
 ## The task graph
@@ -30,7 +30,7 @@ needs the same line.
 
 The root lists its members in `package.json`'s `workspaces` and declares no
 kind, so it keeps no `jterrazz.config.ts`; `apps/web/jterrazz.config.ts` says
-`website` on `react` and holds the app's exceptions, each with its reason —
+`website` on `react` and holds the app's exceptions, each with its reason:
 the React Router route types its `tsconfig.json` reads, and the browser-only
 modules mutation leaves out ([Test](test.md#mutation)). The files derived from
 it are written by `make fix`, and a hand edit is refused: the root keeps

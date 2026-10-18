@@ -2,7 +2,7 @@
 
 **Status:** Accepted
 **Date:** 2026-09-18
-**Amended by:** [ADR-002](002-the-toolchain-judges-the-workspace-from-its-root.md), proposed — `lint` and `lint:fix` leave the task graph, and the cache moves to `.artifacts/turbo/`
+**Amended by:** [ADR-002](002-the-toolchain-judges-the-workspace-from-its-root.md), proposed: `lint` and `lint:fix` leave the task graph, and the cache moves to `.artifacts/turbo/`
 
 ## Context
 
@@ -11,8 +11,8 @@ scripts were written as `npm run <x> --workspace @cap01/web`. Two things follow 
 that spelling, and both get worse with the second application.
 
 The root NAMES the app. `dev`, `build`, `start`, `lint`, `lint:fix` and `test` each
-repeat `@cap01/web`, so the planned API and Expo native client — the approved split,
-recorded on the brand's engineering seat — cannot be added without editing six root
+repeat `@cap01/web`, so the planned API and Expo native client (the approved split,
+recorded on the brand's engineering seat) cannot be added without editing six root
 scripts and inventing a convention for running two of them at once.
 
 Nothing is reused. `make check` ran `lint`, then `build`, then `test` as three
@@ -38,7 +38,7 @@ and mutate rather than produce.
 The cache is `.artifacts/turbo/cache`, not turbo's default `.turbo/cache`. The
 artefact convention puts every tool's output under `.artifacts/<tool>/`, and the
 shared validate workflow already caches the root `.artifacts` directory between runs
-keyed on the lockfile — so CI gains the task cache with no change to the workflow
+keyed on the lockfile, so CI gains the task cache with no change to the workflow
 file. An explicit relative `cacheDir` has a second effect turbo documents: it stops a
 worktree from sharing the main checkout's cache, which would otherwise restore
 outputs holding another checkout's absolute paths.
@@ -47,19 +47,19 @@ outputs holding another checkout's absolute paths.
 read the lockfile, and this is the form that replaces the top-level `packageManager`
 field turbo deprecates. The major is `11.x`, the npm that CI's Node 24 bundles, and
 `onFail` is `ignore`: turbo reads the field for the name and the lockfile format only,
-and nothing pins npm — the lockfile header records no version, the workstation runs
-`12.0.2`, CI `11.19.0` — so npm must not fail an install over it. Turbo accepts one
+and nothing pins npm (the lockfile header records no version, the workstation runs
+`12.0.2`, CI `11.19.0`), so npm must not fail an install over it. Turbo accepts one
 major in this field, never a floor.
 
 ## Consequences
 
 - `make check` on an unchanged tree costs 0.2s instead of 4.9s, and 3.8s to 4.6s when
-  the cache is empty. The numbers are indicative — one shared workstation, one app.
+  the cache is empty. The numbers are indicative: one shared workstation, one app.
 
-| Run                          | Before | After       |
-| ---------------------------- | ------ | ----------- |
-| `make check`, empty cache    | 4.9s   | 3.8s – 4.6s |
-| `make check`, nothing edited | 4.9s   | 0.2s        |
+| Run                          | Before | After        |
+| ---------------------------- | ------ | ------------ |
+| `make check`, empty cache    | 4.9s   | 3.8s to 4.6s |
+| `make check`, nothing edited | 4.9s   | 0.2s         |
 
 - A workspace added under `apps/` joins the graph by carrying the script; the root is
   not edited, which is the reason to pay for turbo before the second app exists.
@@ -68,8 +68,8 @@ major in this field, never a floor.
   build.
 - One path turbo does not let us move: it writes task logs to `<app>/.turbo/`, and no
   flag, config key or environment variable relocates them. `.gitignore` names `.turbo/`
-  plainly — `@jterrazz/typescript` carries that directory on the artefact gate's closed
-  exception list — so one line covers every application and a lint run at any depth
+  plainly (`@jterrazz/typescript` carries that directory on the artefact gate's closed
+  exception list), so one line covers every application and a lint run at any depth
   reads it the same way.
 - A task no longer inherits the shell's environment: turbo filters it to what
   `turbo.json` names. `PORT` is declared on `start` because the operating chapter
