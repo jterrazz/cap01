@@ -1,5 +1,5 @@
 import { Plus } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useSyncExternalStore } from 'react';
 
 import { localDate, toggleHabit } from '../domain/workspace';
 import type { WorkspaceProps } from './workspace-props';
@@ -45,8 +45,20 @@ function HabitForm({ ready, update, workspace }: WorkspaceProps) {
     );
 }
 
+function subscribeToClock(onTick: () => void) {
+    const timer = setInterval(onTick, 60_000);
+    return () => {
+        clearInterval(timer);
+    };
+}
+
 export function HabitsView({ ready, update, workspace }: WorkspaceProps) {
-    const today = localDate(new Date());
+    const today = useSyncExternalStore(
+        subscribeToClock,
+        () => localDate(new Date()),
+        // Stryker disable next-line StringLiteral: the server renders the empty workspace, since storage is read in the browser, so no habit is ever checked against the day it renders
+        () => '',
+    );
     // Stryker disable next-line MethodExpression,ArrowFunction: the server renders the empty workspace, since storage is read in the browser, so a callback over its items never runs there
     const completed = workspace.habits.filter((habit) => habit.completedDates.includes(today));
     return (
