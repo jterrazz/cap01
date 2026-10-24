@@ -4,14 +4,14 @@ Node 24 and npm, from the repository root: one lockfile resolves every member.
 
 ## The gestures
 
-| Command      | Does                                                              |
-| ------------ | ----------------------------------------------------------------- |
-| `make build` | the production bundle of every member (`turbo run build`)         |
-| `make lint`  | the route types, then `typescript check` over the whole workspace |
-| `make fix`   | the route types, then `typescript fix`                            |
-| `make test`  | every member's vitest suite, after its build (`turbo run test`)   |
-| `make check` | `lint`, `test`, then the mutation verdict: everything CI runs     |
-| `make dev`   | the development server on port 4320                               |
+| Command      | Does                                                                                                                                 |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `make build` | the production bundle of every member (`turbo run build`)                                                                            |
+| `make lint`  | the route types, then `typescript check` over the whole workspace                                                                    |
+| `make fix`   | the route types, then `typescript fix`                                                                                               |
+| `make test`  | `typescript test` over `turbo run test`: every member's vitest suite, after its build, and nothing on a tree it already proved green |
+| `make check` | `lint`, `test`, then the mutation verdict: everything CI runs                                                                        |
+| `make dev`   | the development server on port 4320                                                                                                  |
 
 ## The task graph
 

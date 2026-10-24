@@ -16,7 +16,7 @@ fix: install
 	npm run lint:fix
 
 test: install
-	npm test
+	npx typescript test
 
 mutation: install
 	npx typescript mutation
