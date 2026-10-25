@@ -1,7 +1,7 @@
 # The manual
 
 Everything written about the cap01 product workspace lives here, cut by what the
-reader came to do. `README.md` at the root says what the product is; `AGENTS.md`
+reader came to do. `README.md` at the root says what the product is; `CLAUDE.md`
 routes an agent into this map; neither restates a page.
 
 ## Guides
