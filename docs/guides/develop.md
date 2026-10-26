@@ -29,7 +29,7 @@ needs the same line.
 ## The declaration
 
 The root lists its members in `package.json`'s `workspaces` and declares no
-kind, so it keeps no `jterrazz.config.ts`; `apps/web/jterrazz.config.ts` says
+kind, so it keeps no `studio.config.ts`; `apps/web/studio.config.ts` says
 `website` on `react` and holds the app's exceptions, each with its reason:
 the React Router route types its `tsconfig.json` reads, and the browser-only
 modules mutation leaves out ([Test](test.md#mutation)). The files derived from

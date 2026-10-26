@@ -56,5 +56,5 @@ which only an effect reads, and the server runs none. A handler runs only in the
 browser, where no mutant is active: the run counts its mutants, unjudged. Two
 modules hold nothing else, the keydown listener (`use-escape.ts`) and the
 dialog, which renders through a portal only the browser mounts
-(`workspace-dialog.tsx`), and `apps/web/jterrazz.config.ts` leaves them out by
+(`workspace-dialog.tsx`), and `apps/web/studio.config.ts` leaves them out by
 file.

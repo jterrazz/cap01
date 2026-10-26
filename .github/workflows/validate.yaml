@@ -6,7 +6,7 @@ on:
         branches: [main]
 jobs:
     validate:
-        uses: jterrazz/jterrazz-actions/.github/workflows/validate.yaml@main
+        uses: jterrazz/studio-actions/.github/workflows/validate.yaml@main
         with:
             node-version: '24'
             browsers: true
